@@ -1,0 +1,152 @@
+#!/usr/bin/env sh
+
+STOW_TARGETS=(
+  "root:/"
+  "home:${HOME}"
+)
+
+print_help() {
+  echo "Usage: $0 COMMAND [OPTIONS]"
+  echo "       $0 COMMAND [OPTIONS] -p PROGRAM ... -p PROGRAM\n"
+  echo "A tool for managing dotfile configurations using GNU Stow. By default, only the"
+  echo "installed programs will get their dotfile configurations stowed."
+  echo "\nCommands:"
+  echo "    up      Stow the dotfile configurations."
+  echo "    down    Unstow the dotfile configurations."
+  echo "\nOptions:"
+  echo "    -d, --dir DOTFILE_DIR   Set the dotfile directory to DOTFILE_DIR (default is"
+  echo "                            current directory). This directory must contain all"
+  echo "                            the dotfile configurations to stow/unstow. Dotfile"
+  echo "                            configurations must be laid out by target, then by"
+  echo "                            program (e.g. a \".bashrc\" for \`bash\` must be placed"
+  echo "                            in \"\$DOTFILE_DIR/home/bash/.bashrc\"). There are two"
+  echo "                            supported targets: \"root\" and \"home\", respectively"
+  echo "                            pointing at \"/\" and \"\$HOME\"."
+  echo "    -p, --program PROGRAM   Stow/Unstow only the specified PROGRAM's dotfile"
+  echo "                            configurations. With this option, PROGRAM does not"
+  echo "                            have to be installed for stowing to be done."
+  echo "    -f, --force             Do not check if a program is installed when stowing"
+  echo "                            without specifying a PROGRAM."
+  echo "    -n, --no, --simulate    Do not actually make any filesystem changes."
+  echo "    -h, --help              Show this help."
+  echo "\nExamples:"
+  echo "    Stow every dotfiles for all installed programs (reading dotfiles from the"
+  echo "    current directory):"
+  echo "        $0 up\n"
+  echo "    Stow every dotfiles for all programs (reading dotfiles from the current"
+  echo "    directory):"
+  echo "        $0 up --force\n"
+  echo "    Stow every dotfiles for \`bash\` and \`vim\`, reading dotfiles from the"
+  echo "    directory ~/dotfiles:"
+  echo "        $0 -d ~/dotfiles -p bash -p vim up\n"
+  echo "    Unstow every dotfiles for \`vim\` (reading dotfiles from the current"
+  echo "    directory):"
+  echo "        $0 down -p vim"
+}
+
+should_stow() {
+  local program=$1
+
+  [ $(command -v "${program}") ] \
+    || [ -d "/etc/${program}" ] \
+    || return 1
+}
+
+if [ $# -lt 1 ]; then
+  echo "Invalid command: wrong number of arguments."
+  print_help
+  exit 1
+fi
+
+command=$1; shift
+dotfile_dir=$(pwd)
+stow_options=()
+programs=()
+force=false
+
+case ${command} in
+  up)
+    stow_action="--stow"
+    ;;
+  down)
+    stow_action="--delete"
+    force=true
+    ;;
+  -h|--help)
+    print_help
+    exit 0
+    ;;
+  *)
+    echo "Invalid command: $1."
+    print_help
+    exit 1
+esac
+
+while [ $# -gt 0 ]; do
+  case $1 in
+    -d|--dir)
+      dotfile_dir=$2
+      shift; shift
+      ;;
+    -p|--program)
+      programs+=( "$2" )
+      shift; shift
+      ;;
+    -f|--force)
+      force=true
+      shift
+      ;;
+    -n|--no|--simulate)
+      stow_options+=( "$1" )
+      shift
+      ;;
+    -h|--help)
+      print_help
+      exit 0
+      ;;
+    *)
+      echo "Invalid option: $1."
+      print_help
+      exit 1
+  esac
+done
+
+if [ ! -d "${dotfile_dir}" ]; then
+  echo "Invalid argument: missing directory ${dotfile_dir}"
+  print_help
+  exit 1
+fi
+
+for target_desc in ${STOW_TARGETS[@]}; do
+  IFS=: read stow_dirname target_dir <<< "${target_desc}"
+
+  stow_dir="${dotfile_dir}/${stow_dirname}"
+  if [ ! -d "${stow_dir}" ]; then continue; fi
+
+  todo_programs=()
+  if [ ${#programs[@]} -gt 0 ]; then
+    todo_programs=(${programs[@]})
+  else
+    for program in $(ls "${stow_dir}"); do
+      if ${force} || $(should_stow ${program}); then
+        todo_programs+=( "${program}" )
+      fi
+    done
+  fi
+
+  if [ ${#todo_programs[@]} -gt 0 ]; then
+    action_msg="Managing dotfiles of packages [${todo_programs[@]}] (wd=${target_dir})..."
+
+    echo "${action_msg}"
+    # TODO: remove --simulate
+    stow \
+      --verbose 1 \
+      --simulate \
+      ${stow_options[@]} \
+      --dir "${stow_dir}" \
+      --target "${target_dir}" \
+      ${todo_programs[@]/#/${stow_action} }
+    if [ $? -ne 0 ]; then exit 1; fi
+    echo "${action_msg} done"
+  fi
+done
