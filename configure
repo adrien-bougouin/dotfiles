@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 STOW_TARGETS=(
   "root:/"
@@ -6,8 +6,8 @@ STOW_TARGETS=(
 )
 
 print_help() {
-  printf "Usage: $0 COMMAND [OPTIONS...]\n"
-  printf "       $0 COMMAND [OPTIONS...] -p PROGRAM ... -p PROGRAM\n\n"
+  printf "Usage: %s COMMAND [OPTIONS...]\n" "$0"
+  printf "       %s COMMAND [OPTIONS...] -p PROGRAM ... -p PROGRAM\n\n" "$0"
   printf "A tool for managing dotfile configurations using GNU Stow. By default, only the\n"
   printf "installed programs will get their dotfile configurations stowed.\n"
   printf "\nCommands:\n"
@@ -33,22 +33,22 @@ print_help() {
   printf "\nExamples:\n"
   printf "    Stow every dotfiles for all installed programs (reading dotfiles from the\n"
   printf "    current directory):\n"
-  printf "        $0 up\n\n"
+  printf "        %s up\n\n" "$0"
   printf "    Stow every dotfiles for all programs (reading dotfiles from the current\n"
   printf "    directory):\n"
-  printf "        $0 up --force\n\n"
+  printf "        %s up --force\n\n" "$0"
   printf "    Stow every dotfiles for \"bash\" and \"vim\", reading dotfiles from the\n"
   printf "    directory ~/dotfiles:\n"
-  printf "        $0 -d ~/dotfiles -p bash -p vim up\n\n"
+  printf "        %s -d ~/dotfiles -p bash -p vim up\n\n" "$0"
   printf "    Unstow every dotfiles for \"vim\" (reading dotfiles from the current\n"
   printf "    directory):\n"
-  printf "        $0 down -p vim\n"
+  printf "        %s down -p vim\n" "$0"
 }
 
 should_stow() {
   local program="$1"
 
-  [ $(command -v "${program}") ] \
+  [ "$(command -v "${program}")" ] \
     || [ -d "/etc/${program}" ] \
     || return 1
 }
@@ -60,7 +60,7 @@ if [ $# -lt 1 ]; then
 fi
 
 command="$1"; shift
-stow_actions=""
+stow_action=""
 dotfile_dir=$(pwd)
 # TODO: remove --simulate
 stow_options=( "--simulate" )
@@ -80,7 +80,7 @@ case ${command} in
     exit 0
     ;;
   *)
-    printf "Invalid command: $1.\n"
+    printf "Invalid command: %s.\n" "${command}"
     print_help
     exit 1
 esac
@@ -112,26 +112,25 @@ while [ $# -gt 0 ]; do
       exit 0
       ;;
     *)
-      printf "Invalid option: $1.\n"
+      printf "Invalid option: %s.\n" "$1"
       print_help
       exit 1
   esac
 done
 
 if [ ! -d "${dotfile_dir}" ]; then
-  printf "Invalid argument: missing directory ${dotfile_dir}\n"
+  printf "Invalid argument: missing directory %s\n" "${dotfile_dir}"
   print_help
   exit 1
 fi
 
-for target_desc in ${STOW_TARGETS[@]}; do
-  IFS=: read stow_dirname target_dir <<< "${target_desc}"
+for target_desc in "${STOW_TARGETS[@]}"; do
+  IFS=: read -r stow_dirname target_dir <<< "${target_desc}"
 
   stow_dir="${dotfile_dir}/${stow_dirname}"
   if [ ! -d "${stow_dir}" ]; then continue; fi
 
   todo_programs=()
-  ignored_programs=()
   if [ ${#programs[@]} -gt 0 ]; then
     for program in "${programs[@]}"; do
       if [ -d "${stow_dir}/${program}" ]; then
@@ -139,28 +138,26 @@ for target_desc in ${STOW_TARGETS[@]}; do
       fi
     done
   else
-    for program in $(ls "${stow_dir}"); do
-      if ${force} || $(should_stow ${program}); then
+    for program in "${stow_dir}"/*; do
+      program=$(basename "${program}")
+      if ${force} || should_stow "${program}"; then
         todo_programs+=( "${program}" )
       fi
     done
   fi
 
-  #if [ ${#todo_programs[@]} -gt 0 ]; then
   for program in "${todo_programs[@]}"; do
     action_msg="Managing dotfiles of \"${program}\" (wd=${target_dir})..."
 
-    printf "${action_msg}\n"
-    stow \
+    printf "%s\n" "${action_msg}"
+    if stow \
       ${stow_options[@]} \
       --dir "${stow_dir}" \
       --target "${target_dir}" \
-      ${stow_action} ${program}
-    if [ $? -eq 0 ]; then
-      printf "${action_msg} \033[32mdone\033[0m\n"
+      ${stow_action} "${program}"; then
+      printf "%s \033[32mdone\033[0m\n" "${action_msg}"
     else
-      printf "${action_msg} \033[31merror\033[0m\n"
+      printf "%s \033[31merror\033[0m\n" "${action_msg}"
     fi
-  #fi
   done
 done
