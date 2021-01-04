@@ -20,7 +20,7 @@ prompt_git() {
   echo " · ${branch}${change}"
 }
 
-setopt prompt_subst # evaluate functions at each prompt
+setopt prompt_subst # Evaluate functions at each prompt.
 export PS1='%(?|%F{blue}|%F{red})$(prompt_user)@%(6~|.../%4~|%~)$(prompt_git) %#%f '
 
 ################################################################################
