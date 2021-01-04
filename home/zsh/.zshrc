@@ -10,9 +10,9 @@ prompt_user() {
 }
 
 prompt_git() {
-  [ ! $(command -v git) ] && return 0
+  [ ! "$(command -v git)" ] && return 0
 
-  local branch=`git rev-parse --abbrev-ref HEAD 2> /dev/null`
+  local branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
   [[ "${branch}" == "" ]] && return 0
 
   local change=$([[ "$(git diff)" != "" ]] && echo "[±]")
