@@ -49,12 +49,12 @@ print_help() {
 should_stow() {
   local program="$1"
 
-  [ "$(command -v "${program}")" ] \
-    || [ -d "/etc/${program}" ] \
+  [[ "$(command -v "${program}")" ]] \
+    || [[ -d "/etc/${program}" ]] \
     || return 1
 }
 
-if [ $# -lt 1 ]; then
+if [[ $# -lt 1 ]]; then
   printf "Invalid command: wrong number of arguments.\n"
   print_help
   exit 1
@@ -86,7 +86,7 @@ case ${command} in
     exit 1
 esac
 
-while [ $# -gt 0 ]; do
+while [[ $# -gt 0 ]]; do
   case $1 in
     -d|--dir)
       dotfile_dir=$2
@@ -119,7 +119,7 @@ while [ $# -gt 0 ]; do
   esac
 done
 
-if [ ! -d "${dotfile_dir}" ]; then
+if [[ ! -d "${dotfile_dir}" ]]; then
   printf "Invalid argument: missing directory %s.\n" "${dotfile_dir}"
   print_help
   exit 1
@@ -129,12 +129,12 @@ for target_desc in "${STOW_TARGETS[@]}"; do
   IFS=: read -r stow_dirname target_dir <<< "${target_desc}"
 
   stow_dir="${dotfile_dir}/${stow_dirname}"
-  if [ ! -d "${stow_dir}" ]; then continue; fi
+  if [[ ! -d "${stow_dir}" ]]; then continue; fi
 
   todo_programs=()
-  if [ ${#programs[@]} -gt 0 ]; then
+  if [[ ${#programs[@]} -gt 0 ]]; then
     for program in "${programs[@]}"; do
-      if [ -d "${stow_dir}/${program}" ]; then
+      if [[ -d "${stow_dir}/${program}" ]]; then
         todo_programs+=( "${program}" )
       fi
     done

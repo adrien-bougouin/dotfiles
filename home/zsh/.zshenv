@@ -2,10 +2,10 @@
 # EDITOR
 ################################################################################
 
-if [ "$(command -v nvim)" ]; then
+if [[ "$(command -v nvim)" ]]; then
   export EDITOR=nvim
   alias vim="nvim"
-elif [ "$(command -v vim)" ]; then
+elif [[ "$(command -v vim)" ]]; then
   export EDITOR=vim
 fi
 
