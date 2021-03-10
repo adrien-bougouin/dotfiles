@@ -7,43 +7,54 @@ STOW_TARGETS=(
 )
 
 print_help() {
-  printf "Usage: %s COMMAND [OPTIONS...]\n" "$0"
-  printf "       %s COMMAND [OPTIONS...] -p PROGRAM ... -p PROGRAM\n\n" "$0"
-  printf "A tool for managing dotfile configurations using GNU Stow. By default, only the\n"
-  printf "installed programs will get their dotfile configurations stowed.\n"
-  printf "\nCommands:\n"
-  printf "    up      Stow the dotfile configurations.\n"
-  printf "    down    Unstow the dotfile configurations.\n"
-  printf "\nOptions:\n"
-  printf "    -d, --dir DOTFILE_DIR   Set the dotfile directory to DOTFILE_DIR (default is\n"
-  printf "                            current directory). This directory must contain all\n"
-  printf "                            the dotfile configurations to stow/unstow. Dotfile\n"
-  printf "                            configurations must be laid out by target, then by\n"
-  printf "                            program (e.g. a \".bashrc\" for \"bash\" must be placed\n"
-  printf "                            in \"\$DOTFILE_DIR/home/bash/.bashrc\"). There are two\n"
-  printf "                            supported targets: \"root\" and \"home\", respectively\n"
-  printf "                            pointing at \"/\" and \"\$HOME\".\n"
-  printf "    -p, --program PROGRAM   Stow/Unstow only the specified PROGRAM's dotfile\n"
-  printf "                            configurations. With this option, PROGRAM does not\n"
-  printf "                            have to be installed for stowing to be done.\n"
-  printf "    -f, --force             Do not check if a program is installed (always\n"
-  printf "                            enabled with --program).\n"
-  printf "    -n, --no, --simulate    Do not actually make any filesystem changes.\n"
-  printf "    -v, --verbose           Increase verbosity.\n"
-  printf "    -h, --help              Show this help.\n"
-  printf "\nExamples:\n"
-  printf "    Stow every dotfiles for all installed programs (reading dotfiles from the\n"
-  printf "    current directory):\n"
-  printf "        %s up\n\n" "$0"
-  printf "    Stow every dotfiles for all programs (reading dotfiles from the current\n"
-  printf "    directory):\n"
-  printf "        %s up --force\n\n" "$0"
-  printf "    Stow every dotfiles for \"bash\" and \"vim\", reading dotfiles from the\n"
-  printf "    directory ~/dotfiles:\n"
-  printf "        %s -d ~/dotfiles -p bash -p vim up\n\n" "$0"
-  printf "    Unstow every dotfiles for \"vim\" (reading dotfiles from the current\n"
-  printf "    directory):\n"
-  printf "        %s down -p vim\n" "$0"
+cat << HELP
+Usage: $0 COMMAND [OPTIONS...]
+       $0 COMMAND [OPTIONS...] -p PROGRAM ... -p PROGRAM
+
+A tool for managing dotfile configurations using GNU Stow. By default, only the
+installed programs will get their dotfile configurations stowed.
+
+Commands:
+    up      Stow the dotfile configurations.
+    down    Unstow the dotfile configurations.
+    list    List available programs. By default, only installed programs are
+            listed. Use --force to list all.
+
+Options:
+    -d, --dir DOTFILE_DIR   Set the dotfile directory to DOTFILE_DIR (default is
+                            current directory). This directory must contain all
+                            the dotfile configurations to stow/unstow. Dotfile
+                            configurations must be laid out by target, then by
+                            program (e.g. a ".bashrc" for "bash" must be placed
+                            in "\$DOTFILE_DIR/home/bash/.bashrc"). There are two
+                            supported targets: "root" and "home", respectively
+                            pointing at "/" and "\$HOME".
+    -p, --program PROGRAM   Stow/Unstow only the specified PROGRAM's dotfile
+                            configurations. With this option, PROGRAM does not
+                            have to be installed for stowing to be done.
+    -f, --force             Do not check if a program is installed (always
+                            enabled with --program).
+    -n, --no, --simulate    Do not actually make any filesystem changes.
+    -v, --verbose           Increase verbosity.
+    -h, --help              Show this help.
+
+Examples:
+    Stow every dotfiles for all installed programs (reading dotfiles from the
+    current directory):
+        $0 up
+
+    Stow every dotfiles for all programs (reading dotfiles from the current
+    directory):
+        $0 up --force
+
+    Stow every dotfiles for "bash" and "vim", reading dotfiles from the
+    directory ~/dotfiles:
+        $0 -d ~/dotfiles -p bash -p vim up
+
+    Unstow every dotfiles for "vim" (reading dotfiles from the current
+    directory):
+        $0 down -p vim
+HELP
 }
 
 should_stow() {
@@ -67,6 +78,7 @@ dotfile_dir=$(pwd)
 stow_options=( "--simulate" )
 programs=()
 force=false
+list=false
 
 case ${command} in
   up)
@@ -75,6 +87,9 @@ case ${command} in
   down)
     stow_action="--delete"
     force=true
+    ;;
+  list)
+    list=true
     ;;
   -h|--help)
     print_help
@@ -148,9 +163,14 @@ for target_desc in "${STOW_TARGETS[@]}"; do
   fi
 
   for program in "${todo_programs[@]}"; do
-    action_msg="Managing dotfiles of \"${program}\" (wd=${target_dir})..."
+    if ${list}; then
+      printf "%s (%s)\n" "${program}" "${stow_dirname}"
+      continue
+    fi
 
+    action_msg="Managing dotfiles of \"${program}\" (wd=${target_dir})..."
     printf "%s\n" "${action_msg}"
+
     if stow \
       ${stow_options[@]} \
       --dir "${stow_dir}" \
