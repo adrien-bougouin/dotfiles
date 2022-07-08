@@ -1,20 +1,11 @@
-################################################################################
-# EDITOR
-################################################################################
+export EDITOR=`
+  ([[ "$(command -v nvim)" ]] && echo "nvim") \
+  || ([[ "$(command -v vim)" ]] && echo "vim") \
+  || ([[ "$(command -v vi)" ]] && echo "vi")
+`
 
-if [[ "$(command -v nvim)" ]]; then
-  export EDITOR=nvim
-  alias vim="nvim"
-elif [[ "$(command -v vim)" ]]; then
-  export EDITOR=vim
-fi
+# Enable colorized outputs (e.g. with `ls`).
+[[ "${OSTYPE}" == "darwin"* ]] && export CLICOLOR=1
 
-################################################################################
-# PATH
-################################################################################
-
-################################################################################
-# Miscellaneous
-################################################################################
-
-[[ "$OSTYPE" == "darwin"* ]] && export CLICOLOR=1 # enable colorized outputs
+## PATH
+[[ "$(command -v brew)" ]] && export PATH="$(brew --prefix)/bin:${PATH}"
