@@ -74,8 +74,6 @@ fi
 command="$1"; shift
 stow_action=""
 dotfile_dir=$(pwd)
-# TODO: remove --simulate
-stow_options=( "--simulate" )
 programs=()
 force=false
 list=false
