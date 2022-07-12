@@ -2,7 +2,6 @@
 set -euo pipefail
 
 STOW_TARGETS=(
-  "root:/"
   "home:${HOME}"
 )
 
@@ -26,15 +25,15 @@ Options:
                             the dotfile configurations to stow/unstow. Dotfile
                             configurations must be laid out by target, then by
                             program (e.g. a ".bashrc" for "bash" must be placed
-                            in "\$DOTFILE_DIR/home/bash/.bashrc"). There are two
-                            supported targets: "root" and "home", respectively
-                            pointing at "/" and "\$HOME".
+                            in "\$DOTFILE_DIR/home/bash/.bashrc").
+                            There are two supported targets: "root" and "home",
+                            respectively pointing at "/" and "\$HOME".
     -p, --program PROGRAM   Stow/Unstow only the specified PROGRAM's dotfile
                             configurations. With this option, PROGRAM does not
                             have to be installed for stowing to be done.
     -f, --force             Do not check if a program is installed (always
                             enabled with --program).
-    -n, --no, --simulate    Do not actually make any filesystem changes.
+    -n, --no                Do not actually make any filesystem changes.
     -v, --verbose           Increase verbosity.
     -h, --help              Show this help.
 
@@ -73,6 +72,7 @@ fi
 
 command="$1"; shift
 stow_action=""
+stow_options=()
 dotfile_dir=$(pwd)
 programs=()
 force=false
@@ -113,12 +113,12 @@ while [[ $# -gt 0 ]]; do
       force=true
       shift
       ;;
-    -n|--no|--simulate)
+    -n|--no)
       stow_options+=( "$1" )
       shift
       ;;
     -v|--verbose)
-      stow_options+=( "--verbose" )
+      stow_options+=( "$1" )
       shift
       ;;
     -h|--help)
@@ -139,9 +139,9 @@ if [[ ! -d "${dotfile_dir}" ]]; then
 fi
 
 for target_desc in "${STOW_TARGETS[@]}"; do
-  IFS=: read -r stow_dirname target_dir <<< "${target_desc}"
+  IFS=: read -r location target_dir <<< "${target_desc}"
 
-  stow_dir="${dotfile_dir}/${stow_dirname}"
+  stow_dir="${dotfile_dir}/${location}"
   if [[ ! -d "${stow_dir}" ]]; then continue; fi
 
   todo_programs=()
@@ -152,8 +152,8 @@ for target_desc in "${STOW_TARGETS[@]}"; do
       fi
     done
   else
-    for program in "${stow_dir}"/*; do
-      program=$(basename "${program}")
+    for program_dir in "${stow_dir}"/*; do
+      program=$(basename "${program_dir}")
       if ${force} || should_stow "${program}"; then
         todo_programs+=( "${program}" )
       fi
@@ -162,17 +162,18 @@ for target_desc in "${STOW_TARGETS[@]}"; do
 
   for program in "${todo_programs[@]}"; do
     if ${list}; then
-      printf "%s (%s)\n" "${program}" "${stow_dirname}"
+      printf "%s (location=%s, wd=%s)\n" "${program}" "${location}" "${target_dir}"
       continue
     fi
 
-    action_msg="Managing dotfiles of \"${program}\" (wd=${target_dir})..."
+    action_msg="Stowing ${program} (location=${location}, wd=${target_dir})..."
     printf "%s\n" "${action_msg}"
 
     if stow \
-      ${stow_options[@]} \
+      ${stow_options[@]:-} \
       --dir "${stow_dir}" \
       --target "${target_dir}" \
+      --ignore='^\.force' \
       ${stow_action} "${program}"; then
       printf "%s \033[32mdone\033[0m\n" "${action_msg}"
     else
