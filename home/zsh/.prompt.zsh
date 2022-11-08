@@ -10,4 +10,4 @@ git_prompt() {
 }
 
 setopt prompt_subst # Evaluate functions during each prompt.
-export PROMPT='%(?|%F{blue}|%F{red})%n@%m%(6~|.../%4~|%~)$(git_prompt) %#%f '
+export PROMPT='%(?|%F{blue}|%F{red})%n@%m:%(6~|.../%4~|%~)$(git_prompt) %#%f '
