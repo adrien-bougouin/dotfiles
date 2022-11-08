@@ -1,7 +1,7 @@
 # dotfiles
 
 ## Dependencies
-- [GNU Stow](https://www.gnu.org/software/stow/) (test with version 2.3.1)
+- [GNU Stow](https://www.gnu.org/software/stow/) (tested with version 2.3.1)
 
 ## Install dotfiles
 ```
