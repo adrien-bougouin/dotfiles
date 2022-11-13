@@ -1,9 +1,6 @@
 import:
   - ~/.config/alacritty/solarized_light.yml
 
-env:
-  TERM: xterm-256color
-
 shell:
   program: /bin/zsh
   args:
@@ -11,10 +8,30 @@ shell:
     - -c
     - '[[ "$(command -v tmux)" ]] && tmux'
 
+window:
+  decorations: buttonless
+  padding:
+    x: 4
+    y: 0
+
 font:
   normal:
     family: Monaco
   size: 12.0
 
 key_bindings:
+  # Override the default SpawnNewInstance, which fills the dock with Alacritty
+  # instances.
   - { key: N, mods: Command, action: CreateNewWindow }
+    # Set tmux controls using iTerm2 shortcuts.
+  - { key: T, mods: Command, chars: "\x02\x63" } # C-b + c (new window)
+  - { key: Left, mods: Command, chars: "\x02\x70" } # C-b + p (previous window)
+  - { key: Right, mods: Command, chars: "\x02\x6e" } # C-b + n (next window)
+  - { key: D, mods: Command, chars: "\x02\x25" } # C-b + % (new vertical pane)
+  - { key: D, mods: Command|Shift, chars: "\x02\x22" } # C-b + " (new horizontal pane)
+  - { key: Up, mods: Command|Shift, chars: "\x02\x1b\x5b\x41" } # C-b + Up (previous pane)
+  - { key: Left, mods: Command|Shift, chars: "\x02\x1b\x5b\x44" } # C-b + Left (previous pane)
+  - { key: Down, mods: Command|Shift, chars: "\x02\x1b\x5b\x42" } # C-b + Down (previous pane)
+  - { key: Right, mods: Command|Shift, chars: "\x02\x1b\x5b\x43" } # C-b + Right (previous pane)
+  - { key: W, mods: Command, chars: "\x02\x78" } # C-b + x (close pane)
+
