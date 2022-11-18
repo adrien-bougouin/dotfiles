@@ -138,6 +138,13 @@ if [[ ! -d "${dotfile_dir}" ]]; then
   exit 1
 fi
 
+if [[ ! $(command -v stow) ]]; then
+  printf "\033[33m"
+  cat INSTALL
+  printf "\033[0m"
+  exit 1
+fi
+
 for target_desc in "${STOW_TARGETS[@]}"; do
   IFS=: read -r location target_dir <<< "${target_desc}"
 
@@ -145,10 +152,13 @@ for target_desc in "${STOW_TARGETS[@]}"; do
   if [[ ! -d "${stow_dir}" ]]; then continue; fi
 
   todo_programs=()
+  skipped_programs=()
   if [[ ${#programs[@]} -gt 0 ]]; then
     for program in "${programs[@]}"; do
       if [[ -d "${stow_dir}/${program}" ]]; then
         todo_programs+=( "${program}" )
+      else
+        skipped_programs+=( "${program}" )
       fi
     done
   else
@@ -156,28 +166,51 @@ for target_desc in "${STOW_TARGETS[@]}"; do
       program=$(basename "${program_dir}")
       if ${force} || should_stow "${program}"; then
         todo_programs+=( "${program}" )
+      else
+        skipped_programs+=( "${program}" )
       fi
     done
   fi
 
-  for program in "${todo_programs[@]}"; do
-    if ${list}; then
-      printf "%s (location=%s, wd=%s)\n" "${program}" "${location}" "${target_dir}"
-      continue
+  if ${list}; then
+    printf "[target=%s]\n" "${target_dir}"
+
+    if [[ ${#todo_programs[@]} -gt 0 ]]; then
+      for program in "${todo_programs[@]}"; do
+        printf "  \033[32m%s\033[0m" "${program}"
+      done
     fi
 
-    action_msg="Stowing ${program} (location=${location}, wd=${target_dir})..."
-    printf "%s\n" "${action_msg}"
-
-    if stow \
-      ${stow_options[@]:-} \
-      --dir "${stow_dir}" \
-      --target "${target_dir}" \
-      --ignore='^\.force' \
-      ${stow_action} "${program}"; then
-      printf "%s \033[32mdone\033[0m\n" "${action_msg}"
-    else
-      printf "%s \033[31merror\033[0m\n" "${action_msg}"
+    if [[ ${#skipped_programs[@]} -gt 0 ]]; then
+      for program in "${skipped_programs[@]}"; do
+        printf "  \033[31m%s\033[0m" "${program}"
+      done
     fi
-  done
+
+    printf "\n"
+  else
+    for program in "${todo_programs[@]}"; do
+      action_msg="Stowing ${program} (location=${location}, wd=${target_dir})..."
+      printf "%s\n" "${action_msg}"
+
+      if stow \
+        ${stow_options[@]:-} \
+        --dir "${stow_dir}" \
+        --target "${target_dir}" \
+        --ignore='^ECHO$' \
+        ${stow_action} "${program}"; then
+
+        echo_file="${stow_dir}/${program}/ECHO"
+        if [[ -f "${echo_file}" ]]; then
+          printf "\033[33m\n"
+          cat "${echo_file}"
+          printf "\033[0m\n"
+        fi
+
+        printf "%s \033[32mdone\033[0m\n" "${action_msg}"
+      else
+        printf "%s \033[31merror\033[0m\n" "${action_msg}"
+      fi
+    done
+  fi
 done
