@@ -43,6 +43,7 @@ let g:lightline = {
 \}
 
 " junegunn/fzf.vim
+set rtp+=/usr/local/opt/fzf
 map <C-p> :Files<CR>
 
 " lifepillar/vim-solarized8
