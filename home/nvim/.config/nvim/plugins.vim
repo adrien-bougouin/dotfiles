@@ -3,11 +3,6 @@
 "
 " Installing VimPlug:
 " ```
-" # Vim (~/.vim/autoload):
-" curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-"   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-"
-" # Neovim (~/.local/share/nvim/site/autoload):
 " curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
 "   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 " ```
@@ -21,26 +16,11 @@
 call plug#begin('~/.local/share/nvim/plugged')
   Plug 'editorconfig/editorconfig-vim'
   Plug 'farmergreg/vim-lastplace'
-  Plug 'itchyny/lightline.vim'
   Plug 'junegunn/fzf.vim'
   Plug 'lifepillar/vim-solarized8'
   Plug 'lilydjwg/colorizer'
-  Plug 'osyo-manga/vim-over'
-  Plug 'scrooloose/nerdtree'
   Plug 'vim-scripts/commentToggle'
 call plug#end()
-
-" itchyny/lightline.vim
-map <C-t> :tabnew<CR>
-map <PageDown> :tabnext<CR>
-map <PageUp> :tabprevious<CR>
-" Change the color scheme and prevent tabs from getting resized when their focus
-" changes.
-let g:lightline = {
-  \ 'colorscheme': 'solarized',
-  \ 'tabline_separator': { 'left': " ", 'right': "" },
-  \ 'tabline_subseparator': { 'left': "|", 'right': "" }
-\}
 
 " junegunn/fzf.vim
 set rtp+=/usr/local/opt/fzf
@@ -49,14 +29,3 @@ map <C-p> :Files<CR>
 " lifepillar/vim-solarized8
 colorscheme solarized8
 set background=light
-
-" osyo-manga/vim-over
-nmap <C-F> :OverCommandLine<CR>%s/
-
-" scrooloose/nerdtree
-noremap <C-e> :NERDTreeToggle<CR>
-let NERDTreeQuitOnOpen=1
-let g:NERDTreeMouseMode=3
-let g:NERDTreeDirArrowExpandable = '+'
-let g:NERDTreeDirArrowCollapsible = '-'
-autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
