@@ -36,8 +36,8 @@ autocmd BufEnter * match DangerZone /\s\+$\|\%81v.\+/
 " Key Bindings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nmap tt :tabnew<CR>
-nmap tr :tabprevious<CR>
-nmap ty :tabnext<CR>
+nmap tt <cmd>tabnew<cr>
+nmap tr <cmd>tabprevious<cr>
+nmap ty <cmd>tabnext<cr>
 
-vmap <C-c> "*y
+vmap <C-S-c> "*y

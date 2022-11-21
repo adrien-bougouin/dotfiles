@@ -24,7 +24,7 @@ call plug#end()
 
 " junegunn/fzf.vim
 set rtp+=/usr/local/opt/fzf
-map <C-p> :Files<CR>
+nmap <Leader>p <cmd>Files<cr>
 
 " lifepillar/vim-solarized8
 colorscheme solarized8
