@@ -197,13 +197,13 @@ for target_desc in "${STOW_TARGETS[@]}"; do
         "${stow_options[@]:-}" \
         --dir "${stow_dir}" \
         --target "${target_dir}" \
-        --ignore "^ECHO$" \
+        --ignore "^README$" \
         ${stow_action} "${program}"; then
 
-        echo_file="${stow_dir}/${program}/ECHO"
-        if [[ -f "${echo_file}" ]]; then
+        readme_file="${stow_dir}/${program}/README"
+        if [[ "${stow_action}" == "--stow" ]] && [[ -f "${readme_file}" ]]; then
           printf "\033[33m\n"
-          cat "${echo_file}"
+          cat "${readme_file}"
           printf "\033[0m\n"
         fi
 
