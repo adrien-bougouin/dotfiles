@@ -14,7 +14,7 @@ if pcall(require, 'fzf-lua') then
   vim.keymap.set('n', '<leader>p', ':FzfLua files<cr>', {})
   vim.keymap.set('n', '<leader><S-p>', ':FzfLua git_files<cr>', {})
 else
-  vim.notify("FZF key bindings won't work. fzf-lua plugin not found.")
+  vim.notify("'fzf-lua' plugin not found. Fuzzy finding key bindings won't work.")
 end
 
 -- Comment plugin controls.
@@ -22,5 +22,5 @@ if pcall(require, 'nvim_comment') then
   vim.keymap.set('n', '<leader>;', ':CommentToggle<cr>', {})
   vim.keymap.set('v', '<leader>;', ":CommentToggle<cr>", {})
 else
-  vim.notify("Commenting key bindings won't work. nvim_comment plugin not found.")
+  vim.notify("'nvim_comment' plugin not found. Commenting key bindings won't work.")
 end

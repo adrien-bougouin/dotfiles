@@ -62,11 +62,11 @@ if pcall(require, 'packer') then
       for plugin, setup in pairs(plugin_setups) do
         use(plugin)
         if not pcall(setup) then
-          vim.notify(string.format("Something whent wrong setting up plugin '%s'. Is it installed?", plugin))
+          vim.notify(string.format("Something whent wrong setting up plugin '%s'. Try running `:PackerSync`.", plugin))
         end
       end
     end
   )
 else
-  vim.notify("Can't find the Packer plugin manager. Is it installed?")
+  vim.notify("'packer' plugin manager not found. Plugins won't work.")
 end

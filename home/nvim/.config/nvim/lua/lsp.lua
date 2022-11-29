@@ -4,10 +4,16 @@ local lsp_servers = {
   'solargraph'      -- Ruby
 }
 
-local on_attach = function(client, bufnr)
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
+local on_attach = function(client, buffer)
+  local bufopts = { noremap = true, silent = true, buffer = buffer }
 
-  -- TODO: LSP key mappings
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', '<leader><CR>', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', '<leader><space>', vim.lsp.buf.hover, bufopts)
+
+  vim.api.nvim_buf_create_user_command(buffer, 'Format', function()
+    vim.lsp.buf.format { async = true }
+  end, {})
 end
 
 if has_lspconfig then
@@ -16,4 +22,6 @@ if has_lspconfig then
       on_attach = on_attach
     })
   end
+else
+  vim.notify("'lsp-config' plugin not found. Some diagnostics and key bindings won't work.")
 end
