@@ -26,5 +26,6 @@ vim.opt.incsearch     = true
 vim.opt.showmatch     = true
 
 require('plugins')
+require('lsp')
 require('highlights')
 require('key_bindings')

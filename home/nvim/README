@@ -6,8 +6,7 @@ Neovim checklist:
        ~/.local/share/nvim/site/pack/packer/start/packer.nvim && \
        nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
      ```
-  2. Run `:PackerInstall` inside Neovim.
-- Install fzf:
-  - [MacOS] `brew install fzf`
-- Install fd:
-  - [MacOS] `brew install fd`
+  2. Install fzf:
+     - [MacOS] `brew install fzf`
+  3. Install fd:
+     - [MacOS] `brew install fd`

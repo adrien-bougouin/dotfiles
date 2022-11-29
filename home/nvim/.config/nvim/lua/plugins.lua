@@ -49,6 +49,7 @@ local plugin_setups = {
       lastplace_open_folds = true
     })
   end,
+  ['neovim/nvim-lspconfig'] = function() end,
   ['ishan9299/nvim-solarized-lua'] = function()
     vim.cmd('colorscheme solarized')
     vim.opt.background = 'light'

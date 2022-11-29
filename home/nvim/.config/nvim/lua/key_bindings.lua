@@ -1,23 +1,26 @@
+vim.g.mapleader = ' ' -- <leader> = <space>
+
 -- Tab management.
-vim.api.nvim_set_keymap('n', 'tt', ':tabnew<CR>', {})
-vim.api.nvim_set_keymap('n', 'tr', ':tabprevious<CR>', {})
-vim.api.nvim_set_keymap('n', 'ty', ':tabnext<CR>', {})
+vim.keymap.set('n', '<leader>tt', ':tabnew<cr>', {})
+vim.keymap.set('n', '<leader>tr', ':tabprevious<cr>', {})
+vim.keymap.set('n', '<leader>ty', ':tabnext<cr>', {})
 
 -- System clipboard management.
-vim.api.nvim_set_keymap('v', '<C-S-c>', '"*y', {})
+vim.keymap.set('v', '<C-S-c>', '"*y', {})
+vim.keymap.set('i', '<C-S-v>', '<esc>"*pa', {})
 
 -- FZF plugin controls.
 if pcall(require, 'fzf-lua') then
-  vim.api.nvim_set_keymap('n', '<Leader>p', ':FzfLua files<CR>', {})
-  vim.api.nvim_set_keymap('n', '<Leader><S-p>', ':FzfLua git_files<CR>', {})
+  vim.keymap.set('n', '<leader>p', ':FzfLua files<cr>', {})
+  vim.keymap.set('n', '<leader><S-p>', ':FzfLua git_files<cr>', {})
 else
   vim.notify("FZF key bindings won't work. fzf-lua plugin not found.")
 end
 
 -- Comment plugin controls.
 if pcall(require, 'nvim_comment') then
-  vim.api.nvim_set_keymap('n', '<Leader>;', ':CommentToggle<CR>', {})
-  vim.api.nvim_set_keymap('v', '<Leader>;', ":CommentToggle<CR>", {})
+  vim.keymap.set('n', '<leader>;', ':CommentToggle<cr>', {})
+  vim.keymap.set('v', '<leader>;', ":CommentToggle<cr>", {})
 else
   vim.notify("Commenting key bindings won't work. nvim_comment plugin not found.")
 end
