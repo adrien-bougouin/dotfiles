@@ -1,3 +1,5 @@
+-- :help packer
+--
 -- Plugin management with Packer (https://github.com/wbthomason/packer.nvim).
 --
 -- Intalling Packer:

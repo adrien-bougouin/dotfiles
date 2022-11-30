@@ -1,15 +1,22 @@
+-- :help lspconfig-all
+
 local has_lspconfig, lspconfig = pcall(require, 'lspconfig')
 local lsp_servers = {
-  'rust_analyzer',  -- Rust
-  'solargraph'      -- Ruby
+  'sumneko_lua',   -- Lua
+  'rust_analyzer', -- Rust
+  'solargraph'     -- Ruby
 }
 
-local on_attach = function(client, buffer)
-  local bufopts = { noremap = true, silent = true, buffer = buffer }
+local on_attach = function(_, buffer)
+  local keymap_options = { noremap = true, silent = true, buffer = buffer }
 
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', '<leader><CR>', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', '<leader><space>', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', '<space>d', vim.diagnostic.open_float, keymap_options)
+  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, keymap_options)
+  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, keymap_options)
+
+  vim.keymap.set('n', '<leader><space>', vim.lsp.buf.hover, keymap_options)
+  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, keymap_options)
+  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, keymap_options)
 
   vim.api.nvim_buf_create_user_command(buffer, 'Format', function()
     vim.lsp.buf.format { async = true }

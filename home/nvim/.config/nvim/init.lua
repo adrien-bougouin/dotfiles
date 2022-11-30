@@ -1,3 +1,5 @@
+-- :help init
+
 vim.cmd([[
   filetype plugin indent on
   syntax enable

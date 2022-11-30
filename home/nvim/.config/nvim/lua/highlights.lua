@@ -1,3 +1,5 @@
+-- :help nvim_create_autocmd
+
 -- Show when a line is exceeding 80 characters.
 vim.cmd('highlight LineOverflow ctermbg=Red ctermfg=White guibg=Red guifg=White')
 vim.api.nvim_create_autocmd('BufEnter', {
