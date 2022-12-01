@@ -5,8 +5,8 @@ vim.g.mapleader = ' ' -- <leader> = <space>
 
 -- Tab management.
 vim.keymap.set('n', '<leader>t', ':tabnew<cr>', {})
-vim.keymap.set('n', '[[', ':tabprevious<cr>', {})
-vim.keymap.set('n', ']]', ':tabnext<cr>', {})
+vim.keymap.set('n', '[t', ':tabprevious<cr>', {})
+vim.keymap.set('n', ']t', ':tabnext<cr>', {})
 
 -- System clipboard management.
 vim.keymap.set('v', '<C-S-c>', '"*y', {})
