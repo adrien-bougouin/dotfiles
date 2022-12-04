@@ -194,7 +194,7 @@ for target_desc in "${STOW_TARGETS[@]}"; do
       printf "%s\n" "${action_msg}"
 
       if stow \
-        "${stow_options[@]:-}" \
+        ${stow_options[@]:-} \
         --dir "${stow_dir}" \
         --target "${target_dir}" \
         --ignore "^README$" \
