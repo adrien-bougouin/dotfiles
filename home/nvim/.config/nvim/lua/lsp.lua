@@ -8,6 +8,8 @@ local lsp_servers = {
 }
 
 local on_attach = function(_, buffer)
+  -- Keep showing the colomn for dignostics' signs, to prevent text from moving
+  -- when it is shown/hid.
   vim.opt.signcolumn = 'yes'
 
   vim.diagnostic.config({
