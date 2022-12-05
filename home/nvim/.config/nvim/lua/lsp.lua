@@ -22,7 +22,7 @@ local on_attach = function(_, buffer)
 
   local keymap_options = { noremap = true, silent = true, buffer = buffer }
 
-  vim.keymap.set('n', '<space>d', vim.diagnostic.open_float, keymap_options)
+  vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, keymap_options)
   vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, keymap_options)
   vim.keymap.set('n', ']d', vim.diagnostic.goto_next, keymap_options)
 
