@@ -4,9 +4,9 @@
 vim.g.mapleader = ' ' -- <leader> = <space>
 
 -- Tab management.
-vim.keymap.set('n', '<leader>t', ':tabnew<cr>', {})
-vim.keymap.set('n', '[t', ':tabprevious<cr>', {})
-vim.keymap.set('n', ']t', ':tabnext<cr>', {})
+vim.keymap.set('n', '<C-t>', ':tabnew<cr>', {})
+vim.keymap.set('n', '<C-[>', ':tabprevious<cr>', {})
+vim.keymap.set('n', '<C-]>', ':tabnext<cr>', {})
 
 -- System clipboard management.
 vim.keymap.set('v', '<C-S-c>', '"*y', {})
@@ -17,6 +17,7 @@ if pcall(require, 'fzf-lua') then
   vim.keymap.set('n', '<leader>f', ':FzfLua files<cr>', {})
   vim.keymap.set('n', '<leader><S-f>', ':FzfLua git_files<cr>', {})
   vim.keymap.set('n', '<leader>b', ':FzfLua buffers<cr>', {})
+  vim.keymap.set('n', '<leader>g', ':FzfLua live_grep_resume<cr>', {})
 else
   vim.notify("'fzf-lua' plugin not found. Fuzzy finding key bindings won't work.")
 end

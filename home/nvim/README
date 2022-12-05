@@ -11,6 +11,8 @@ Neovim checklist:
       - [MacOS] `brew install fzf`
     - fd:
       - [MacOS] `brew install fd`
+    - ripgrep:
+      - [MacOS] `brew install ripgrep`
 - Install LSP servers:
   - Lua:
     - [MacOS] `brew install lua-language-server`

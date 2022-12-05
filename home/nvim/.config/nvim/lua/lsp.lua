@@ -8,6 +8,16 @@ local lsp_servers = {
 }
 
 local on_attach = function(_, buffer)
+  vim.opt.signcolumn = 'yes'
+
+  vim.diagnostic.config({
+    virtual_text = false
+  })
+
+  vim.api.nvim_buf_create_user_command(buffer, 'Format', function()
+    vim.lsp.buf.format { async = true }
+  end, {})
+
   local keymap_options = { noremap = true, silent = true, buffer = buffer }
 
   vim.keymap.set('n', '<space>d', vim.diagnostic.open_float, keymap_options)
@@ -17,10 +27,6 @@ local on_attach = function(_, buffer)
   vim.keymap.set('n', '<leader><space>', vim.lsp.buf.hover, keymap_options)
   vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, keymap_options)
   vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, keymap_options)
-
-  vim.api.nvim_buf_create_user_command(buffer, 'Format', function()
-    vim.lsp.buf.format { async = true }
-  end, {})
 end
 
 if has_lspconfig then

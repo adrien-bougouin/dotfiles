@@ -6,7 +6,7 @@ git_prompt() {
 
   local change=$([[ "$(git diff)" != "" ]] && echo "*")
 
-  echo " - ${branch}${change}"
+  echo " - git[${branch}${change}]"
 }
 
 setopt prompt_subst # Evaluate functions during each prompt.
