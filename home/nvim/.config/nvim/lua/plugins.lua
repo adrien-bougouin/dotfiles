@@ -37,7 +37,19 @@ local plugin_setups = {
   end,
 
   ['gpanders/editorconfig.nvim'] = function() end,
-  ['ibhagwan/fzf-lua'] = function() end,
+  ['ibhagwan/fzf-lua'] = function()
+    require('fzf-lua').setup({
+      winopts = {
+        preview = {
+          layout = 'vertical',
+          vertical = 'up:66%'
+        }
+      },
+      fzf_opts = {
+        ['--layout'] = 'reverse-list',
+      }
+    })
+  end,
   ['NvChad/nvim-colorizer.lua'] = function()
     require('colorizer').setup()
   end,
