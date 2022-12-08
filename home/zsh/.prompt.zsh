@@ -4,9 +4,9 @@ git_prompt() {
   local branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
   [[ "${branch}" == "" ]] && return 0
 
-  local change=$([[ "$(git diff)" != "" ]] && echo "*")
+  local change=$([[ "$(git diff)" != "" ]] && echo "|*")
 
-  echo " - git[${branch}${change}]"
+  echo " - git(${branch}${change})"
 }
 
 setopt prompt_subst # Evaluate functions during each prompt.
