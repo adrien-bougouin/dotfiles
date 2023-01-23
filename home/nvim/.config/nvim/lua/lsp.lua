@@ -2,13 +2,13 @@
 
 local has_lspconfig, lspconfig = pcall(require, 'lspconfig')
 local lsp_servers = {
-  'sumneko_lua',   -- Lua
-  'rust_analyzer', -- Rust
-  'solargraph'     -- Ruby
+  'rust_analyzer',
+  'solargraph',  -- Ruby
+  'sumneko_lua', -- Lua
 }
 
 local open_diagnostic = function()
-  vim.diagnostic.open_float({ scope = 'cursor' })
+  vim.diagnostic.open_float({ scope = 'cursor', focusable = false })
 end
 
 local on_attach = function(_, buffer)

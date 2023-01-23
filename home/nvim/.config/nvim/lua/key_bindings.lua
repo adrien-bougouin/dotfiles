@@ -3,7 +3,9 @@
 vim.g.mapleader = ' ' -- <leader> = <space>
 
 -- Tab management.
+vim.keymap.set('n', '<S-C-t>', ':tabnew<cr>:tabm -1<cr>', {})
 vim.keymap.set('n', '<C-t>', ':tabnew<cr>', {})
+vim.keymap.set('i', '<S-C-t>', '<esc>:tabnew<cr>:tabm -1<cr>', {})
 vim.keymap.set('i', '<C-t>', '<esc>:tabnew<cr>', {})
 
 -- System clipboard management.
