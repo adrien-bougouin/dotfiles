@@ -17,7 +17,7 @@ if pcall(require, 'fzf-lua') then
   vim.keymap.set('n', '<C-f>', ':FzfLua files<cr>', {})
   vim.keymap.set('n', '<C-S-f>', ':FzfLua git_files<cr>', {})
   vim.keymap.set('n', '<C-b>', ':FzfLua buffers<cr>', {})
-  vim.keymap.set('n', '<C-g>', ':FzfLua live_grep_resume<cr>', {})
+  vim.keymap.set('n', '<C-g>', ':FzfLua live_grep<cr>', {})
 
   vim.keymap.set('i', '<C-f>', '<esc>:FzfLua files<cr>', {})
   vim.keymap.set('i', '<C-S-f>', '<esc>:FzfLua git_files<cr>', {})
