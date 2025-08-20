@@ -8,7 +8,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
 })
 
 -- Show when a line is exceeding 80 characters.
-vim.cmd("highlight LineOverflow ctermbg=reverse guibg=reverse")
+vim.cmd("highlight LineOverflow cterm=reverse gui=reverse")
 vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*",
   command = [[syntax match LineOverflow /\%81v.\+/]]
