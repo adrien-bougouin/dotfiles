@@ -4,6 +4,7 @@ ENV HOME=/home/ubuntu
 WORKDIR ${HOME}
 
 RUN apt update --fix-missing
+RUN apt install -y git
 RUN apt install -y stow
 
 ################################################################################

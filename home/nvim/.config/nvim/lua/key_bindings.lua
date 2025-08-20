@@ -1,36 +1,35 @@
 -- :help lua-keymap
 
-vim.g.mapleader = ' ' -- <leader> = <space>
+local Notifier = require("utils/notifier")
 
--- Tab management.
-vim.keymap.set('n', '<S-C-t>', ':tabnew<cr>:tabm -1<cr>', {})
-vim.keymap.set('n', '<C-t>', ':tabnew<cr>', {})
-vim.keymap.set('i', '<S-C-t>', '<esc>:tabnew<cr>:tabm -1<cr>', {})
-vim.keymap.set('i', '<C-t>', '<esc>:tabnew<cr>', {})
+vim.g.mapleader = " " -- <leader>
 
--- System clipboard management.
-vim.keymap.set('v', '<C-S-c>', '"*y', {})
-vim.keymap.set('i', '<C-S-v>', '<esc>"*pa', {})
+-- Tab management
+vim.keymap.set("n", "<leader>tT", ":tabnew<cr>:tabm -1<cr>", {})
+vim.keymap.set("n", "<leader>tt", ":tabnew<cr>", {})
 
--- FZF plugin controls.
-if pcall(require, 'fzf-lua') then
-  vim.keymap.set('n', '<C-f>', ':FzfLua files<cr>', {})
-  vim.keymap.set('n', '<C-S-f>', ':FzfLua git_files<cr>', {})
-  vim.keymap.set('n', '<C-b>', ':FzfLua buffers<cr>', {})
-  vim.keymap.set('n', '<C-g>', ':FzfLua live_grep<cr>', {})
+-- System clipboard management
+vim.keymap.set("n", "<leader>yy", '"*yy', {})
+vim.keymap.set("n", "<leader>p", '"*p', {})
+vim.keymap.set("n", "<leader><S-p>", '"*P', {})
+vim.keymap.set("v", "<leader>y", '"*y', {})
+vim.keymap.set("v", "<leader>p", '"*p', {})
+vim.keymap.set("v", "<leader><S-p>", '"*P', {})
 
-  vim.keymap.set('i', '<C-f>', '<esc>:FzfLua files<cr>', {})
-  vim.keymap.set('i', '<C-S-f>', '<esc>:FzfLua git_files<cr>', {})
-  vim.keymap.set('i', '<C-b>', '<esc>:FzfLua buffers<cr>', {})
-  vim.keymap.set('i', '<C-g>', '<esc>:FzfLua live_grep_resume<cr>', {})
+-- FZF plugin controls
+if pcall(require, "fzf-lua") then
+  vim.keymap.set("n", "<leader>ff", ":FzfLua files<cr>", {})
+  vim.keymap.set("n", "<leader>fb", ":FzfLua buffers<cr>", {})
+  vim.keymap.set("n", "<leader>fg", ":FzfLua live_grep<cr>", {})
+  vim.keymap.set("n", "<leader>fh", ":FzfLua help_tags<cr>", {})
 else
-  vim.notify("'fzf-lua' plugin not found. Fuzzy finding key bindings won't work.")
+  Notifier.warning("'fzf-lua' plugin not found. Fuzzy finding key bindings won't work.")
 end
 
--- Comment plugin controls.
-if pcall(require, 'nvim_comment') then
-  vim.keymap.set('n', ';;', ':CommentToggle<cr>', {})
-  vim.keymap.set('v', ';;', ":CommentToggle<cr>", {})
+-- Comment plugin controls
+if pcall(require, "nvim_comment") then
+  vim.keymap.set("n", "<leader>;", ":CommentToggle<cr>", {})
+  vim.keymap.set("v", "<leader>;", ":CommentToggle<cr>", {})
 else
-  vim.notify("'nvim_comment' plugin not found. Commenting key bindings won't work.")
+  Notifier.warning("'nvim_comment' plugin not found. Commenting key bindings won't work.")
 end
