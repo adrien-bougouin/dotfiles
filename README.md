@@ -3,10 +3,14 @@
 ## Dependencies
 - [GNU Stow](https://www.gnu.org/software/stow/) (tested with version 2.3.1)
 
-## Install dotfiles
+## Usage (`make help`)
 ```
-# Stow configuration files for programs installed on the system.
-./link up
+Usage:
+    make docker     Test configurations in a Docker container.
+    make install    Stow configurations for all installed programs.
+    make help       Show this help.
+
+    ./link --help   Show more advance usage.
 ```
 
 ## References
