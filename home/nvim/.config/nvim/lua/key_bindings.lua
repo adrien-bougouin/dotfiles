@@ -2,8 +2,6 @@
 
 local Notifier = require("utils/notifier")
 
-vim.g.mapleader = " " -- <leader>
-
 -- Tab management
 vim.keymap.set("n", "<leader>tT", ":tabnew<cr>:tabm -1<cr>", {})
 vim.keymap.set("n", "<leader>tt", ":tabnew<cr>", {})

@@ -1,3 +1,5 @@
+-- :help vim.log
+
 local Notifier = {}
 
 function Notifier.warning(message)

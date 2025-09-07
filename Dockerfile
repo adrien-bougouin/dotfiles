@@ -1,4 +1,4 @@
-FROM ubuntu:plucky-20250714
+FROM ubuntu:latest
 
 ENV HOME=/home/ubuntu
 WORKDIR ${HOME}
@@ -10,11 +10,10 @@ RUN apt install -y stow
 ################################################################################
 # Neovim dependencies
 
-# Install Vim to look for potential issues from Neovim configurations.
 RUN apt install -y vim
-
 RUN apt install -y neovim
-# TODO
+
+RUN apt install -y fd-find fzf ripgrep # See ibhagwan/fzf-lua
 
 ################################################################################
 
