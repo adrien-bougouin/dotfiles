@@ -1,4 +1,4 @@
--- :help lspconfig-all
+-- :help lsp
 
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('rust_analyzer')
@@ -6,54 +6,35 @@ vim.lsp.enable('solargraph')
 
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+    -- When inputing trigger characters such as "." or "->", automatically
+    -- trigger autocompletion.
+    if client:supports_method("textDocument/completion") then
+      vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+    end
+
+    -- When showing completion, do not automatically write the first choice in
+    -- the buffer.
+    vim.cmd("set completeopt+=noselect")
+
+    -- When there is no diagnostics to show, prevent the diagnostic column from
+    -- hiding, which makes text move.
     vim.opt.signcolumn = 'yes'
+
+    vim.diagnostic.config({
+      update_in_insert = true,
+      virtual_text = false,
+      virtual_lines = { current_line = true }
+    })
+
+    -- Override "<C-w>d" to open diagnostics in unfocusable float. When
+    -- focusable, the cursor goes inside the float after a second "<C-w>d"
+    -- input and the cursor feels stuck (must press "q" to exit the float).
+    vim.keymap.set(
+      "n", "<C-w>d", function()
+        vim.diagnostic.open_float({ focusable = false })
+      end
+    )
   end
 })
-
-
--- local open_diagnostic = function()
---   vim.diagnostic.open_float({ scope = 'cursor', focusable = false })
--- end
-
-local on_attach = function(_, buffer)
-  -- local keymap_options = { noremap = true, silent = true, buffer = buffer }
-  --
-  -- -- Keep showing the colomn for dignostics' signs, to prevent text from moving
-  -- -- when it is shown/hid.
-  -- vim.opt.signcolumn = 'yes'
-  --
-  -- -- Disable diagnostic text that is mixed with lines of code.
-  -- vim.diagnostic.config({
-  --   virtual_text = false
-  -- })
-  --
-  -- vim.o.updatetime = 250
-  -- vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-  --   buffer = buffer,
-  --   callback = open_diagnostic
-  -- })
-  --
-  -- vim.api.nvim_buf_create_user_command(buffer, 'Format', function()
-  --   vim.lsp.buf.format { async = true }
-  -- end, {})
-  --
-  -- vim.keymap.set('n', '<leader>d', open_diagnostic, keymap_options)
-  -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, keymap_options)
-  -- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, keymap_options)
-  --
-  -- vim.keymap.set('n', '<leader><space>', vim.lsp.buf.hover, keymap_options)
-  -- vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, keymap_options)
-  -- vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, keymap_options)
-end
-
--- local has_lspconfig, lspconfig = pcall(require, 'lspconfig')
---
--- if has_lspconfig then
---   for _, lsp_server in ipairs(lsp_servers) do
---     lspconfig[lsp_server].setup({
---       on_attach = on_attach
---     })
---   end
--- else
---   vim.notify("'lsp-config' plugin not found. Some diagnostics and key bindings won't work.")
--- end
