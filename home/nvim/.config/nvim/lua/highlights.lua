@@ -1,7 +1,7 @@
 -- :help nvim_create_autocmd
 
 -- Show trailing whitespaces
-vim.cmd("highlight TrailingWhitespaces ctermbg=LightRed guibg=LightRed")
+vim.cmd("highlight TrailingWhitespaces cterm=reverse gui=reverse")
 vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*",
   command = [[syntax match TrailingWhitespaces /\s\+$/]]

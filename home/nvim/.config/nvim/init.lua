@@ -3,5 +3,5 @@
 require("defaults")
 require("plugins")
 require("highlights")
-require("lsp")
+require("lsps")
 require("key_bindings")

@@ -21,5 +21,3 @@ vim.opt.tabstop       = 2
 
 vim.opt.incsearch     = true
 vim.opt.showmatch     = true
-
-vim.g.mapleader = " " -- <leader>

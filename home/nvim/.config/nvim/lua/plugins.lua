@@ -49,6 +49,7 @@ if lazy_installed then
           require('nvim_comment').setup({create_mappings = false})
         end
       },
+      -- Reopens file at the last viewed line
       {
         "ethanholz/nvim-lastplace",
         config = function()
@@ -59,12 +60,22 @@ if lazy_installed then
           })
         end
       },
+      -- Injects default LSP settings
       { "neovim/nvim-lspconfig" },
       {
         "ishan9299/nvim-solarized-lua",
         config = function ()
           vim.opt.background = "light"
           vim.cmd("colorscheme solarized")
+        end
+      },
+      -- Shows hidden scope declaration on top
+      {
+        "nvim-treesitter/nvim-treesitter-context",
+        config = function()
+          require("treesitter-context").setup({
+            separator = "─"
+          })
         end
       }
     }
