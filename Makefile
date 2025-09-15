@@ -5,9 +5,13 @@ install: stow-check
 .PHONY: install
 
 docker:
-	docker build --progress=plain --tag nvim-renewal .
+	docker build $(ARGS) --progress=plain --tag nvim-renewal .
 	docker run --interactive --tty nvim-renewal
 .PHONY: docker
+
+docker--no-cache:
+	$(MAKE) docker ARGS="--no-cache"
+.PHONY: docker--no-cache
 
 stow-check:
 	@if [ -z "`command -v stow`" ]; then \
