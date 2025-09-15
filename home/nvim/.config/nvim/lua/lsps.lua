@@ -1,8 +1,10 @@
 -- :help lsp
 
-vim.lsp.enable('lua_ls')
-vim.lsp.enable('rust_analyzer')
-vim.lsp.enable('solargraph')
+vim.lsp.enable('lua_ls')        -- Lua
+vim.lsp.enable('rust_analyzer') -- Rust
+vim.lsp.enable('solargraph')    -- Ruby
+vim.lsp.enable('ts_ls')         -- Typescript
+vim.lsp.enable('vue_ls')        -- Vue
 
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
