@@ -20,42 +20,35 @@ local lazy_installed, lazy = pcall(require, "lazy")
 if lazy_installed then
   lazy.setup({
     spec = {
-      { "gpanders/editorconfig.nvim" },
       {
         "ibhagwan/fzf-lua",
         config = function()
-          require('fzf-lua').setup({
+          require("fzf-lua").setup({
             winopts = {
               preview = {
-                layout = 'vertical',
-                vertical = 'up:66%'
+                layout = "vertical",
+                vertical = "up:66%"
               }
             },
             fzf_opts = {
-              ['--layout'] = 'reverse-list',
+              ["--layout"] = "reverse-list",
             }
           })
         end
       },
       {
-        "NvChad/nvim-colorizer.lua",
-        config = function()
-          require('colorizer').setup()
-        end
-      },
-      {
         "terrortylor/nvim-comment",
         config = function ()
-          require('nvim_comment').setup({create_mappings = false})
+          require("nvim_comment").setup({ create_mappings = false })
         end
       },
       -- Reopens file at the last viewed line
       {
         "ethanholz/nvim-lastplace",
         config = function()
-          require('nvim-lastplace').setup({
-            lastplace_ignore_buftype = {"quickfix", "nofile", "help"},
-            lastplace_ignore_filetype = {"gitcommit", "gitrebase", "svn", "hgcommit"},
+          require("nvim-lastplace").setup({
+            lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
+            lastplace_ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit" },
             lastplace_open_folds = true
           })
         end
@@ -65,17 +58,16 @@ if lazy_installed then
       {
         "ishan9299/nvim-solarized-lua",
         config = function ()
-          vim.opt.background = "light"
           vim.cmd("colorscheme solarized")
+
+          vim.opt.termguicolors = true
         end
       },
       -- Shows hidden scope declaration on top
       {
         "nvim-treesitter/nvim-treesitter-context",
         config = function()
-          require("treesitter-context").setup({
-            separator = "─"
-          })
+          require("treesitter-context").setup()
         end
       }
     }

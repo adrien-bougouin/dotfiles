@@ -1,14 +1,14 @@
 -- :help nvim_create_autocmd
 
 -- Show trailing whitespaces
-vim.cmd("highlight TrailingWhitespaces ctermbg=LightRed gui=undercurl guisp=Red")
+vim.cmd("highlight TrailingWhitespaces cterm=undercurl gui=undercurl guisp=Red")
 vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*",
   command = [[call matchadd("TrailingWhitespaces", "\\s\\+$")]]
 })
 
 -- Show when a line is exceeding 80 characters.
-vim.cmd("highlight LineOverflow ctermbg=LightRed gui=undercurl,bold,italic guisp=Red")
+vim.cmd("highlight LineOverflow cterm=undercurl,bold,italic gui=undercurl,bold,italic guisp=Red")
 vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*",
   command = [[call matchadd("LineOverflow", "\\%81v.\\+")]]

@@ -1,10 +1,10 @@
 -- :help lsp
 
-vim.lsp.enable('lua_ls')        -- Lua
-vim.lsp.enable('rust_analyzer') -- Rust
-vim.lsp.enable('solargraph')    -- Ruby
-vim.lsp.enable('ts_ls')         -- Typescript
-vim.lsp.enable('vue_ls')        -- Vue
+vim.lsp.enable("lua_ls")        -- Lua
+vim.lsp.enable("rust_analyzer") -- Rust
+vim.lsp.enable("solargraph")    -- Ruby
+vim.lsp.enable("ts_ls")         -- Typescript
+vim.lsp.enable("vue_ls")        -- Vue
 
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
@@ -22,7 +22,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     -- When there is no diagnostics to show, prevent the diagnostic column from
     -- hiding, which makes text move.
-    vim.opt.signcolumn = 'yes'
+    vim.opt.signcolumn = "yes"
 
     vim.diagnostic.config({
       update_in_insert = true,
