@@ -20,6 +20,13 @@ if pcall(require, "fzf-lua") then
   vim.keymap.set("n", "<leader>fb", ":FzfLua buffers<cr>", {})
   vim.keymap.set("n", "<leader>fg", ":FzfLua live_grep<cr>", {})
   vim.keymap.set("n", "<leader>fh", ":FzfLua help_tags<cr>", {})
+
+  vim.keymap.set("n", "<leader>tF", ":tabnew<cr>:tabm -1<cr>:FzfLua files<cr>", {})
+  vim.keymap.set("n", "<leader>tf", ":tabnew<cr>:FzfLua files<cr>", {})
+  vim.keymap.set("n", "<leader>tB", ":tabnew<cr>:tabm -1<cr>:FzfLua buffers<cr>", {})
+  vim.keymap.set("n", "<leader>tb", ":tabnew<cr>:FzfLua buffers<cr>", {})
+  vim.keymap.set("n", "<leader>tG", ":tabnew<cr>:tabm -1<cr>:FzfLua live_grep<cr>", {})
+  vim.keymap.set("n", "<leader>tg", ":tabnew<cr>:FzfLua live_grep<cr>", {})
 else
   Notifier.warning("'fzf-lua' plugin not found. Fuzzy finding key bindings won't work.")
 end

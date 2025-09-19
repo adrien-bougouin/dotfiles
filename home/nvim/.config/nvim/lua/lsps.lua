@@ -1,5 +1,7 @@
 -- :help lsp
 
+vim.lsp.enable("harper")        -- Grammar checker
+
 vim.lsp.enable("lua_ls")        -- Lua
 vim.lsp.enable("rust_analyzer") -- Rust
 vim.lsp.enable("solargraph")    -- Ruby
@@ -25,7 +27,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.opt.signcolumn = "yes"
 
     vim.diagnostic.config({
-      update_in_insert = true,
       virtual_text = false,
       virtual_lines = { current_line = true }
     })

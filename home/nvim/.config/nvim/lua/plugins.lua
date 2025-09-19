@@ -36,12 +36,6 @@ if lazy_installed then
           })
         end
       },
-      {
-        "terrortylor/nvim-comment",
-        config = function ()
-          require("nvim_comment").setup({ create_mappings = false })
-        end
-      },
       -- Reopens file at the last viewed line
       {
         "ethanholz/nvim-lastplace",

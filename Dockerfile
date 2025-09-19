@@ -16,6 +16,7 @@ RUN brew install --build-from-source fzf
 RUN brew install fd ripgrep
 
 # Language servers
+RUN brew install harper
 RUN brew install lua-language-server
 
 ################################################################################
