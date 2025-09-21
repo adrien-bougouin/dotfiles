@@ -20,6 +20,34 @@ local lazy_installed, lazy = pcall(require, "lazy")
 if lazy_installed then
   lazy.setup({
     spec = {
+      -- TreeSitter
+      {
+        "nvim-treesitter/nvim-treesitter",
+        lazy = false,
+        build = ":TSUpdate",
+        config = function()
+          require("nvim-treesitter.configs").setup({
+            auto_install = true,
+            highlight = { enable = true },
+            incremental_selection = { enable = true },
+            indent = { enable = true }
+          })
+        end
+      },
+      { "nvim-treesitter/nvim-treesitter-context" },
+
+      -- LSP
+      { "neovim/nvim-lspconfig" },
+      {
+        "ishan9299/nvim-solarized-lua",
+        config = function ()
+          vim.cmd("colorscheme solarized")
+
+          vim.opt.termguicolors = true
+        end
+      },
+
+      -- FZF
       {
         "ibhagwan/fzf-lua",
         opts = {
@@ -34,7 +62,8 @@ if lazy_installed then
           }
         }
       },
-      -- Reopens file at the last viewed line
+
+      -- Miscelaneous
       {
         "ethanholz/nvim-lastplace",
         opts = {
@@ -42,33 +71,6 @@ if lazy_installed then
           lastplace_ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit" },
           lastplace_open_folds = true
         }
-      },
-      -- Injects default LSP settings
-      { "neovim/nvim-lspconfig" },
-      {
-        "ishan9299/nvim-solarized-lua",
-        config = function ()
-          vim.cmd("colorscheme solarized")
-
-          vim.opt.termguicolors = true
-        end
-      },
-      {
-        "nvim-treesitter/nvim-treesitter",
-        lazy = false,
-        build = ":TSUpdate",
-        config = function()
-          require("nvim-treesitter.configs").setup({
-            auto_install = true,
-            highlight = { enable = true },
-            incremental_selection = { enable = true },
-            indent = { enable = true }
-          })
-        end
-      },
-      -- Shows hidden scope declaration on top
-      {
-        "nvim-treesitter/nvim-treesitter-context"
       }
     }
   })
