@@ -1,23 +1,36 @@
-FROM ubuntu:plucky-20250714
+# syntax=docker/dockerfile:1
+# check=error=true
 
-ENV HOME=/home/ubuntu
-WORKDIR ${HOME}
+FROM homebrew/brew:latest
 
-RUN apt update --fix-missing
-RUN apt install -y stow
+USER linuxbrew
 
 ################################################################################
 # Neovim dependencies
 
-# Install Vim to look for potential issues from Neovim configurations.
-RUN apt install -y vim
+RUN brew install vim
+RUN brew install neovim
 
-RUN apt install -y neovim
-# TODO
+# Tools for ibhagwan/fzf-lua plugin
+RUN brew install --build-from-source fzf
+RUN brew install fd ripgrep
+
+# Language servers
+RUN brew install harper
+RUN brew install lua-language-server
+
+################################################################################
+# Dotfiles installation
+
+RUN brew install stow
+
+COPY --chown=linuxbrew . .dotfiles
+RUN cd .dotfiles; ./link up
 
 ################################################################################
 
-COPY . .dotfiles
-RUN cd .dotfiles; ./link up
+# For quick access to commands
+RUN echo "exit" >> ${HOME}/.bash_history
+RUN echo "nvim" >> ${HOME}/.bash_history
 
 CMD ["bash"]
