@@ -12,18 +12,17 @@ vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
 
-    -- When inputing trigger characters such as "." or "->", automatically
-    -- trigger autocompletion.
+    -- Automatically trigger completion after inputing the active language
+    -- servers' trigger characters (e.g. "." ro "->").
     if client:supports_method("textDocument/completion") then
       vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
     end
 
-    -- When showing completion, do not automatically write the first choice in
-    -- the buffer.
+    -- Prevent the completion from filling the line with the first suggestion.
     vim.cmd("set completeopt+=noselect")
 
-    -- When there is no diagnostics to show, prevent the diagnostic column from
-    -- hiding, which makes text move.
+    -- Always show the sign column when a language server is active, preventing
+    -- it from showing/hiding everytime there is/isn't an LSP diagnostic.
     vim.opt.signcolumn = "yes"
 
     vim.diagnostic.config({
