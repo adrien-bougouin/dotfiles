@@ -1,7 +1,5 @@
 -- :help lua-vim-opt
 
-vim.cmd("colorscheme vim")
-
 vim.opt.background     = "light"
 vim.opt.termguicolors  = false
 

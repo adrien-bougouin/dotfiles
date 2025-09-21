@@ -30,14 +30,5 @@ vim.api.nvim_create_autocmd("LspAttach", {
       virtual_text = false,
       virtual_lines = { current_line = true }
     })
-
-    -- Override "<C-w>d" to open diagnostics in unfocusable float. When
-    -- focusable, the cursor goes inside the float after a second "<C-w>d"
-    -- input and the cursor feels stuck (must press "q" to exit the float).
-    vim.keymap.set(
-      "n", "<C-w>d", function()
-        vim.diagnostic.open_float({ focusable = false })
-      end
-    )
   end
 })

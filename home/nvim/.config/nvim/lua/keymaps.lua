@@ -14,6 +14,15 @@ vim.keymap.set("v", "<leader>y", '"*y', {})
 vim.keymap.set("v", "<leader>p", '"*p', {})
 vim.keymap.set("v", "<leader><S-p>", '"*P', {})
 
+-- Open diagnostics keymap override to open as unfocusable float, preventing the
+-- cursor from going inside the float and appearing stuck (must press "q" to
+-- exit the float).
+vim.keymap.set(
+  "n", "<C-w>d", function()
+    vim.diagnostic.open_float({ focusable = false })
+  end
+)
+
 -- FZF plugin controls
 if pcall(require, "fzf-lua") then
   vim.keymap.set("n", "<leader>ff", ":FzfLua files<cr>", {})
@@ -29,12 +38,15 @@ if pcall(require, "fzf-lua") then
   vim.keymap.set("n", "<leader>tg", ":tabnew<cr>:FzfLua live_grep<cr>", {})
 else
   Notifier.warning("'fzf-lua' plugin not found. Fuzzy finding key bindings won't work.")
-end
 
--- Comment plugin controls
-if pcall(require, "nvim_comment") then
-  vim.keymap.set("n", "<leader>;", ":CommentToggle<cr>", {})
-  vim.keymap.set("v", "<leader>;", ":CommentToggle<cr>", {})
-else
-  Notifier.warning("'nvim_comment' plugin not found. Commenting key bindings won't work.")
+  vim.keymap.set("n", "<leader>ff", ":Explore<cr>", {})
+  vim.keymap.set("n", "<leader>fb", ":ls<cr>", {})
+  vim.keymap.set("n", "<leader>fg", ":vimgrep ", {})
+
+  vim.keymap.set("n", "<leader>tF", ":tabnew<cr>:tabm -1<cr>:Explore<cr>", {})
+  vim.keymap.set("n", "<leader>tf", ":tabnew<cr>:Explore<cr>", {})
+  vim.keymap.set("n", "<leader>tB", ":tabnew<cr>:tabm -1<cr>:ls<cr>", {})
+  vim.keymap.set("n", "<leader>tb", ":tabnew<cr>:ls<cr>", {})
+  vim.keymap.set("n", "<leader>tG", ":tabnew<cr>:tabm -1<cr>:vimgrep", {})
+  vim.keymap.set("n", "<leader>tg", ":tabnew<cr>:vimgrep ", {})
 end

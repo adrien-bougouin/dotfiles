@@ -22,30 +22,26 @@ if lazy_installed then
     spec = {
       {
         "ibhagwan/fzf-lua",
-        config = function()
-          require("fzf-lua").setup({
-            winopts = {
-              preview = {
-                layout = "vertical",
-                vertical = "up:66%"
-              }
-            },
-            fzf_opts = {
-              ["--layout"] = "reverse-list",
+        opts = {
+          winopts = {
+            preview = {
+              layout = "vertical",
+              vertical = "up:66%"
             }
-          })
-        end
+          },
+          fzf_opts = {
+            ["--layout"] = "reverse-list",
+          }
+        }
       },
       -- Reopens file at the last viewed line
       {
         "ethanholz/nvim-lastplace",
-        config = function()
-          require("nvim-lastplace").setup({
-            lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
-            lastplace_ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit" },
-            lastplace_open_folds = true
-          })
-        end
+        opts = {
+          lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
+          lastplace_ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit" },
+          lastplace_open_folds = true
+        }
       },
       -- Injects default LSP settings
       { "neovim/nvim-lspconfig" },
@@ -57,12 +53,22 @@ if lazy_installed then
           vim.opt.termguicolors = true
         end
       },
+      {
+        "nvim-treesitter/nvim-treesitter",
+        lazy = false,
+        build = ":TSUpdate",
+        config = function()
+          require("nvim-treesitter.configs").setup({
+            auto_install = true,
+            highlight = { enable = true },
+            incremental_selection = { enable = true },
+            indent = { enable = true }
+          })
+        end
+      },
       -- Shows hidden scope declaration on top
       {
-        "nvim-treesitter/nvim-treesitter-context",
-        config = function()
-          require("treesitter-context").setup()
-        end
+        "nvim-treesitter/nvim-treesitter-context"
       }
     }
   })

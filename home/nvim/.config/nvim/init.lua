@@ -1,7 +1,12 @@
 -- :help init
 
-require("defaults")
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ','
+
+vim.cmd("colorscheme vim")
+
+require("options")
 require("plugins")
 require("highlights")
-require("lsps")
-require("key_bindings")
+require("keymaps")
+require("lsp")
