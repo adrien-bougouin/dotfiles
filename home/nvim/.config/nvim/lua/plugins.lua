@@ -38,14 +38,6 @@ if lazy_installed then
 
       -- LSP
       { "neovim/nvim-lspconfig" },
-      {
-        "ishan9299/nvim-solarized-lua",
-        config = function ()
-          vim.cmd("colorscheme solarized")
-
-          vim.opt.termguicolors = true
-        end
-      },
 
       -- FZF
       {
@@ -64,6 +56,7 @@ if lazy_installed then
       },
 
       -- Miscelaneous
+      { "ishan9299/nvim-solarized-lua" },
       {
         "ethanholz/nvim-lastplace",
         opts = {
