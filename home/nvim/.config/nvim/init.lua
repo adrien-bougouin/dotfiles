@@ -3,16 +3,14 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
 
--- Set default colorscheme based on terminal colorscheme
+-- Set fallback colorscheme based on terminal colorscheme.
 vim.cmd("colorscheme vim")
 
 require("options")
 require("plugins")
-require("highlights")
-require("keymaps")
-require("lsp")
 
--- Set Solarized colorscheme, if available
+-- Set Solarized colorscheme, if available (must be done before importing
+-- the custom highlights).
 local colorscheme =
   vim.fn.getcompletion("solarized-flat", "color")[1]
 if colorscheme then
@@ -20,3 +18,7 @@ if colorscheme then
 
   vim.cmd(string.format("colorscheme %s", colorscheme))
 end
+
+require("highlights")
+require("keymaps")
+require("lsp")

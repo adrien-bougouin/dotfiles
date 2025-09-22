@@ -1,6 +1,6 @@
 -- :help lsp
 
-vim.lsp.enable("harper")        -- Grammar checker
+vim.lsp.enable("harper_ls")     -- Grammar checker
 
 vim.lsp.enable("lua_ls")        -- Lua
 vim.lsp.enable("rust_analyzer") -- Rust
