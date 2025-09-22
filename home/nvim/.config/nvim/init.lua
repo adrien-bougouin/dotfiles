@@ -3,13 +3,13 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
 
--- Set fallback colorscheme based on terminal colorscheme.
+-- Set fallback color scheme based on terminal color scheme.
 vim.cmd("colorscheme vim")
 
 require("options")
 require("plugins")
 
--- Set Solarized colorscheme, if available (must be done before importing
+-- Set Solarized color scheme, if available (must be done before importing
 -- the custom highlights).
 local colorscheme =
   vim.fn.getcompletion("solarized-flat", "color")[1]

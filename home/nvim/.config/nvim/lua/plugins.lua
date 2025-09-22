@@ -20,7 +20,7 @@ local lazy_installed, lazy = pcall(require, "lazy")
 if lazy_installed then
   lazy.setup({
     spec = {
-      -- TreeSitter
+      -- Tree-sitter
       {
         "nvim-treesitter/nvim-treesitter",
         lazy = false,
@@ -55,7 +55,7 @@ if lazy_installed then
         }
       },
 
-      -- Miscelaneous
+      -- Miscellaneous
       { "ishan9299/nvim-solarized-lua" },
       {
         "ethanholz/nvim-lastplace",
