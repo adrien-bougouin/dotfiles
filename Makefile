@@ -5,8 +5,8 @@ install: stow-check
 .PHONY: install
 
 docker:
-	docker build $(ARGS) --progress=plain --tag nvim-renewal .
-	docker run --interactive --tty nvim-renewal
+	docker build $(ARGS) --progress=plain --tag dotfiles .
+	docker run --interactive --tty --name dotfiles-sandbox dotfiles
 .PHONY: docker
 
 docker--no-cache:
