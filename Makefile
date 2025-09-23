@@ -6,7 +6,7 @@ install: stow-check
 
 docker:
 	docker build $(ARGS) --progress=plain --tag dotfiles .
-	docker run --interactive --tty --name dotfiles-sandbox dotfiles
+	docker run --interactive --tty dotfiles
 .PHONY: docker
 
 docker--no-cache:
