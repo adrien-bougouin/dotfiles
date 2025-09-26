@@ -5,7 +5,6 @@ vim.opt.fileencoding = "utf-8"
 vim.opt.fileformats = "unix,mac,dos"
 
 -- UI
-vim.opt.background = "light"
 vim.opt.cursorline = true
 vim.opt.incsearch = true
 vim.opt.mouse = "a"

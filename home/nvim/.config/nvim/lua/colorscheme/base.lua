@@ -1,0 +1,207 @@
+-- :help highlight-default
+
+
+return {
+  setup = function(colors)
+    return {
+      Normal = { fg = "fg", ctermbg = colors.Background },
+      Visual = { ctermbg = colors.HighlightBackground, ctermfg = colors.HighlightForeground },
+      LineNr = { ctermbg = colors.HighlightBackground },
+
+      -- Cursor
+      CursorLine = { ctermbg = colors.HighlightBackground },
+      CursorLineNr = { ctermbg = colors.HighlightBackground, bold = true },
+
+      -- TODO: Tab
+
+      -- Popup menu
+      Pmenu = { fg = "fg", ctermbg = colors.HighlightBackground },
+      -- PmenuSel = { ctermbg = colors.Black, ctermfg = colors.BrightWhite },
+
+      -- Float window
+      NormalFloat = { link = "Pmenu" },
+    }
+  end
+}
+
+-- ColorColumn	Used for the columns set with 'colorcolumn'.
+-- 							*hl-Conceal*
+-- Conceal		Placeholder characters substituted for concealed
+-- 		text (see 'conceallevel').
+-- 							*hl-CurSearch*
+-- CurSearch	Current match for the last search pattern (see 'hlsearch').
+-- 		Note: This is correct after a search, but may get outdated if
+-- 		changes are made or the screen is redrawn.
+-- 						*hl-Cursor* *hl-lCursor*
+-- Cursor		Character under the cursor.
+-- lCursor		Character under the cursor when |language-mapping|
+-- 		is used (see 'guicursor').
+-- 							*hl-CursorIM*
+-- CursorIM	Like Cursor, but used when in IME mode. *CursorIM*
+-- 							*hl-CursorColumn*
+-- CursorColumn	Screen-column at the cursor, when 'cursorcolumn' is set.
+-- 		Low-priority if foreground (ctermfg OR guifg) is not set.
+-- 							*hl-Directory*
+-- Directory	Directory names (and other special names in listings).
+-- 							*hl-DiffAdd*
+-- DiffAdd		Diff mode: Added line. |diff.txt|
+-- 							*hl-DiffChange*
+-- DiffChange	Diff mode: Changed line. |diff.txt|
+-- 							*hl-DiffDelete*
+-- DiffDelete	Diff mode: Deleted line. |diff.txt|
+-- 							*hl-DiffText*
+-- DiffText	Diff mode: Changed text within a changed line. |diff.txt|
+-- 							*hl-EndOfBuffer*
+-- EndOfBuffer	Filler lines (~) after the end of the buffer.
+-- 		By default, this is highlighted like |hl-NonText|.
+-- 							*hl-TermCursor*
+-- TermCursor	Cursor in a focused terminal.
+-- 							*hl-ErrorMsg*
+-- ErrorMsg	Error messages on the command line.
+-- 							*hl-WinSeparator*
+-- WinSeparator	Separators between window splits.
+-- 							*hl-Folded*
+-- Folded		Line used for closed folds.
+-- 							*hl-FoldColumn*
+-- FoldColumn	'foldcolumn'
+-- 							*hl-SignColumn*
+-- SignColumn	Column where |signs| are displayed.
+-- 							*hl-IncSearch*
+-- IncSearch	'incsearch' highlighting; also used for the text replaced with
+-- 		":s///c".
+-- 							*hl-Substitute*
+-- Substitute	|:substitute| replacement text highlighting.
+-- 							*hl-LineNrAbove*
+-- LineNrAbove	Line number for when the 'relativenumber'
+-- 		option is set, above the cursor line.
+-- 							*hl-LineNrBelow*
+-- LineNrBelow	Line number for when the 'relativenumber'
+-- 		option is set, below the cursor line.
+-- 							*hl-CursorLineFold*
+-- CursorLineFold	Like FoldColumn when 'cursorline' is set for the cursor line.
+-- 							*hl-CursorLineSign*
+-- CursorLineSign	Like SignColumn when 'cursorline' is set for the cursor line.
+-- 							*hl-MatchParen*
+-- MatchParen	Character under the cursor or just before it, if it
+-- 		is a paired bracket, and its match. |pi_paren.txt|
+-- 							*hl-ModeMsg*
+-- ModeMsg		'showmode' message (e.g., "-- INSERT --").
+-- 							*hl-MsgArea*
+-- MsgArea		Area for messages and command-line, see also 'cmdheight'.
+-- 							*hl-MsgSeparator*
+-- MsgSeparator	Separator for scrolled messages |msgsep|.
+-- 							*hl-MoreMsg*
+-- MoreMsg		|more-prompt|
+-- 							*hl-NonText*
+-- NonText		'@' at the end of the window, characters from 'showbreak'
+-- 		and other characters that do not really exist in the text
+-- 		(e.g., ">" displayed when a double-wide character doesn't
+-- 		fit at the end of the line). See also |hl-EndOfBuffer|.
+-- 							*hl-FloatBorder*
+-- FloatBorder	Border of floating windows.
+-- 							*hl-FloatTitle*
+-- FloatTitle	Title of floating windows.
+-- 							*hl-FloatFooter*
+-- FloatFooter	Footer of floating windows.
+-- 							*hl-NormalNC*
+-- NormalNC	Normal text in non-current windows.
+-- 							*hl-PmenuKind*
+-- PmenuKind	Popup menu: Normal item "kind".
+-- 							*hl-PmenuKindSel*
+-- PmenuKindSel	Popup menu: Selected item "kind".
+-- 							*hl-PmenuExtra*
+-- PmenuExtra	Popup menu: Normal item "extra text".
+-- 							*hl-PmenuExtraSel*
+-- PmenuExtraSel	Popup menu: Selected item "extra text".
+-- 							*hl-PmenuSbar*
+-- PmenuSbar	Popup menu: Scrollbar.
+-- 							*hl-PmenuThumb*
+-- PmenuThumb	Popup menu: Thumb of the scrollbar.
+-- 							*hl-PmenuMatch*
+-- PmenuMatch	Popup menu: Matched text in normal item. Combined with
+-- 		|hl-Pmenu|.
+-- 							*hl-PmenuMatchSel*
+-- PmenuMatchSel	Popup menu: Matched text in selected item. Combined with
+-- 		|hl-PmenuMatch| and |hl-PmenuSel|.
+-- 							*hl-ComplMatchIns*
+-- ComplMatchIns	Matched text of the currently inserted completion.
+-- 							*hl-Question*
+-- Question	|hit-enter| prompt and yes/no questions.
+-- 							*hl-QuickFixLine*
+-- QuickFixLine	Current |quickfix| item in the quickfix window. Combined with
+-- 		|hl-CursorLine| when the cursor is there.
+-- 							*hl-Search*
+-- Search		Last search pattern highlighting (see 'hlsearch').
+-- 		Also used for similar items that need to stand out.
+-- 							*hl-SnippetTabstop*
+-- SnippetTabstop	Tabstops in snippets. |vim.snippet|
+-- 							*hl-SpecialKey*
+-- SpecialKey	Unprintable characters: Text displayed differently from what
+-- 		it really is. But not 'listchars' whitespace. |hl-Whitespace|
+-- 							*hl-SpellBad*
+-- SpellBad	Word that is not recognized by the spellchecker. |spell|
+-- 		Combined with the highlighting used otherwise.
+-- 							*hl-SpellCap*
+-- SpellCap	Word that should start with a capital. |spell|
+-- 		Combined with the highlighting used otherwise.
+-- 							*hl-SpellLocal*
+-- SpellLocal	Word that is recognized by the spellchecker as one that is
+-- 		used in another region. |spell|
+-- 		Combined with the highlighting used otherwise.
+-- 							*hl-SpellRare*
+-- SpellRare	Word that is recognized by the spellchecker as one that is
+-- 		hardly ever used. |spell|
+-- 		Combined with the highlighting used otherwise.
+-- 							*hl-StatusLine*
+-- StatusLine	Status line of current window.
+-- 							*hl-StatusLineNC*
+-- StatusLineNC	Status lines of not-current windows.
+-- 							*hl-StatusLineTerm*
+-- StatusLineTerm	Status line of |terminal| window.
+-- 							*hl-StatusLineTermNC*
+-- StatusLineTermNC
+-- 		Status line of non-current |terminal| windows.
+-- 							*hl-TabLine*
+-- TabLine		Tab pages line, not active tab page label.
+-- 							*hl-TabLineFill*
+-- TabLineFill	Tab pages line, where there are no labels.
+-- 							*hl-TabLineSel*
+-- TabLineSel	Tab pages line, active tab page label.
+-- 							*hl-Title*
+-- Title		Titles for output from ":set all", ":autocmd" etc.
+-- 							*hl-VisualNOS*
+-- VisualNOS	Visual mode selection when vim is "Not Owning the Selection".
+-- 							*hl-WarningMsg*
+-- WarningMsg	Warning messages.
+-- 							*hl-Whitespace*
+-- Whitespace	"nbsp", "space", "tab", "multispace", "lead" and "trail"
+-- 		in 'listchars'.
+-- 							*hl-WildMenu*
+-- WildMenu	Current match in 'wildmenu' completion.
+-- 							*hl-WinBar*
+-- WinBar		Window bar of current window.
+-- 							*hl-WinBarNC*
+-- WinBarNC	Window bar of not-current windows.
+--
+-- 					*hl-User1* *hl-User1..9* *hl-User9*
+-- The 'statusline' syntax allows the use of 9 different highlights in the
+-- statusline and ruler (via 'rulerformat').  The names are User1 to User9.
+--
+-- For the GUI you can use the following groups to set the colors for the menu,
+-- scrollbars and tooltips.  They don't have defaults.  This doesn't work for the
+-- Win32 GUI.  Only three highlight arguments have any effect here: font, guibg,
+-- and guifg.
+--
+-- 							*hl-Menu*
+-- Menu		Current font, background and foreground colors of the menus.
+-- 		Also used for the toolbar.
+-- 		Applicable highlight arguments: font, guibg, guifg.
+--
+-- 							*hl-Scrollbar*
+-- Scrollbar	Current background and foreground of the main window's
+-- 		scrollbars.
+-- 		Applicable highlight arguments: guibg, guifg.
+--
+-- 							*hl-Tooltip*
+-- Tooltip		Current font, background and foreground of the tooltips.
+-- 		Applicable highlight arguments: font, guibg, guifg.

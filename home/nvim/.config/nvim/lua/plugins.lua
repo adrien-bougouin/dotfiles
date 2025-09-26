@@ -19,6 +19,7 @@ local lazy_installed, lazy = pcall(require, "lazy")
 
 if lazy_installed then
   lazy.setup({
+    install = { colorscheme = { "host", "vim" } },
     spec = {
       -- Tree-sitter
       {
@@ -56,7 +57,14 @@ if lazy_installed then
       },
 
       -- Miscellaneous
-      { "ishan9299/nvim-solarized-lua" },
+      -- {
+      --   "ishan9299/nvim-solarized-lua",
+      --   config = function()
+      --     vim.opt.termguicolors = true
+      --
+      --     vim.cmd.colorscheme("solarized")
+      --   end
+      -- },
       {
         "ethanholz/nvim-lastplace",
         opts = {
