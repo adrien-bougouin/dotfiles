@@ -21,7 +21,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
   command = [[call matchadd("LineOverflow", "\\%81v.\\+")]]
 })
 
--- TODO: also apply to floats
 -- Prevent matches to affect the FZF popups
 --
 -- https://www.reddit.com/r/neovim/comments/l2qur6/how_to_get_rid_of_highlight_artifacts_in_fzf_popup/
