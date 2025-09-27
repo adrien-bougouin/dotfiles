@@ -1,14 +1,21 @@
+-- :help nvim_set_hl
 -- :help nvim_create_autocmd
 
+-- Override some "vim" colorscheme highlights
+if vim.g.colors_name == "vim" then
+  -- Original LightGrey (7) setting is not easily readable.
+  vim.api.nvim_set_hl(0, "DiagnosticHint", { fg = "Black", ctermfg = 0 })
+end
+
 -- Show trailing whitespaces
-vim.cmd("highlight TrailingWhitespaces cterm=undercurl gui=undercurl guisp=Red")
+vim.api.nvim_set_hl(0, "TrailingWhitespaces", { sp = "Red", undercurl = true })
 vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*",
   command = [[call matchadd("TrailingWhitespaces", "\\s\\+$")]]
 })
 
 -- Show when a line is exceeding 80 characters.
-vim.cmd("highlight LineOverflow cterm=undercurl gui=undercurl guisp=Red")
+vim.api.nvim_set_hl(0, "LineOverflow", { sp = "Red", undercurl = true })
 vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*",
   command = [[call matchadd("LineOverflow", "\\%81v.\\+")]]
