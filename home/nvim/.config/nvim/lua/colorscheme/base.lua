@@ -12,7 +12,10 @@ return {
       CursorLine = { ctermbg = colors.HighlightBackground },
       CursorLineNr = { ctermbg = colors.HighlightBackground, bold = true },
 
-      -- TODO: Tab
+      -- Tab line
+      TabLine = { reverse = true },
+      TabLineFill = { link = "TabLine" },
+      TabLineSel = { link = "Normal" },
 
       -- Popup menu
       Pmenu = { fg = "fg", ctermbg = colors.HighlightBackground },
@@ -161,13 +164,6 @@ return {
 -- 							*hl-StatusLineTermNC*
 -- StatusLineTermNC
 -- 		Status line of non-current |terminal| windows.
--- 							*hl-TabLine*
--- TabLine		Tab pages line, not active tab page label.
--- 							*hl-TabLineFill*
--- TabLineFill	Tab pages line, where there are no labels.
--- 							*hl-TabLineSel*
--- TabLineSel	Tab pages line, active tab page label.
--- 							*hl-Title*
 -- Title		Titles for output from ":set all", ":autocmd" etc.
 -- 							*hl-VisualNOS*
 -- VisualNOS	Visual mode selection when vim is "Not Owning the Selection".
