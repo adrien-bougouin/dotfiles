@@ -2,6 +2,8 @@
 
 local Notifier = require("utils/notifier")
 
+vim.keymap.set("n", "<leader>rn", ":set relativenumber!<cr>", {})
+
 -- Tab management
 vim.keymap.set("n", "<leader>tT", ":tabnew<cr>:tabm -1<cr>", {})
 vim.keymap.set("n", "<leader>tt", ":tabnew<cr>", {})
