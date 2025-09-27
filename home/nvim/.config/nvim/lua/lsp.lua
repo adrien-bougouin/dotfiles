@@ -10,14 +10,6 @@ vim.lsp.enable("vue_ls")        -- Vue
 
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-
-    -- Automatically trigger completion after inputting the active language
-    -- servers' trigger characters (e.g. "." or "->").
-    if client:supports_method("textDocument/completion") then
-      vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
-    end
-
     -- Prevent the completion from filling the line with the first suggestion.
     vim.cmd("set completeopt+=noselect")
 
@@ -28,7 +20,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.diagnostic.config({
       update_in_insert = false,
       virtual_text = false,
-      virtual_lines = { current_line = true }
+      virtual_lines = false
     })
   end
 })
