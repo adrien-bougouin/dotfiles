@@ -19,7 +19,7 @@ local lazy_installed, lazy = pcall(require, "lazy")
 
 if lazy_installed then
   lazy.setup({
-    install = { colorscheme = { "host", "vim" } },
+    install = { colorscheme = { "vim" } },
     spec = {
       -- Tree-sitter
       {
@@ -76,5 +76,5 @@ if lazy_installed then
     }
   })
 else
-  Notifier.warning("Failed to load plugin manager 'lazy.nvim'. Plugins won't work.")
+  Notifier.warning("Failed to load plugin manager \"lazy.nvim\". Plugins won't work.")
 end

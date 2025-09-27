@@ -3,8 +3,7 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
 
-vim.opt.background = "light"
-vim.cmd.colorscheme("host")
+vim.cmd.colorscheme("vim")
 
 require("options")
 require("plugins")

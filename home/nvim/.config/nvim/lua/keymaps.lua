@@ -39,7 +39,7 @@ if pcall(require, "fzf-lua") then
   vim.keymap.set("n", "<leader>tG", ":tabnew<cr>:tabm -1<cr>:FzfLua live_grep<cr>", {})
   vim.keymap.set("n", "<leader>tg", ":tabnew<cr>:FzfLua live_grep<cr>", {})
 else
-  Notifier.warning("'fzf-lua' plugin not found. Fuzzy finding key bindings won't work.")
+  Notifier.warning("\"fzf-lua\" plugin not found. Fuzzy finding key bindings won't work.")
 
   vim.keymap.set("n", "<leader>ff", ":Explore<cr>", {})
   vim.keymap.set("n", "<leader>fb", ":ls<cr>", {})
