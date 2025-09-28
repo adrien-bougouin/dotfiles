@@ -16,11 +16,11 @@ vim.keymap.set("v", "<leader>y", '"*y', {})
 vim.keymap.set("v", "<leader>p", '"*p', {})
 vim.keymap.set("v", "<leader><S-p>", '"*P', {})
 
--- Open diagnostics keymap override to open as unfocusable float, preventing the
--- cursor from going inside the float and appearing stuck (must press "q" to
--- exit the float).
+-- "Open diagnostic" override
 vim.keymap.set(
   "n", "<C-w>d", function()
+    -- Use unfocusable float to prevent the cursor from going inside the float
+    -- and appear stuck (must press "q" to exit the float).
     vim.diagnostic.open_float({ focusable = false })
   end
 )
