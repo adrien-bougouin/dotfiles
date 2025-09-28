@@ -16,15 +16,6 @@ vim.keymap.set("v", "<leader>y", '"*y', {})
 vim.keymap.set("v", "<leader>p", '"*p', {})
 vim.keymap.set("v", "<leader><S-p>", '"*P', {})
 
--- "Open diagnostic" override
-vim.keymap.set(
-  "n", "<C-w>d", function()
-    -- Use unfocusable float to prevent the cursor from going inside the float
-    -- and appear stuck (must press "q" to exit the float).
-    vim.diagnostic.open_float({ focusable = false })
-  end
-)
-
 -- FZF plugin controls
 if pcall(require, "fzf-lua") then
   vim.keymap.set("n", "<leader>ff", ":FzfLua files<cr>", {})
